@@ -12,7 +12,8 @@ const config = {
     browserName: 'chromium', // Default browser
     headless: false, // Run tests in headless mode
     screenshot: 'on',
-    trace: 'retain-on-failure', // Retain trace files on failure
+    trace: 'on', // Retain trace files on failure
+    video: 'on', // Record video of each test
   },
 };
 

@@ -3,6 +3,7 @@ const {test, expect} = require('@playwright/test');
 test('Client App Login', async ({ page }) => {
     const productName  = "ADIDAS ORIGINAL";
     const products = page.locator(".card-body");
+    const email = "anshika@gmail.com";
     await page.goto('https://rahulshettyacademy.com/client');
     await page.locator('#userEmail').fill('anshika@gmail.com');
     await page.locator('#userPassword').fill('Iamking@000');
@@ -38,6 +39,24 @@ test('Client App Login', async ({ page }) => {
         }
     }
 
-    await page.pause(); // Pause to inspect the page
+    await expect(page.locator(".user__name.mt-5 label")).toHaveText(email);
+    await page.locator(".action__submit").click();
 
+    await expect(page.locator(".hero-primary")).toHaveText(" Thankyou for the order. ")
+    const orderId = await page.locator(".em-spacer-1 .ng-star-inserted").textContent();
+    console.log(orderId);
+    // await page.pause(); // Pause to inspect the page
+    await page.locator("button[routerlink*='myorders']").click();
+    await page.locator("tbody").waitFor();
+    const row = await page.locator("tbody tr");
+
+    for(let i = 0; i < await row.count(); ++i) {
+        const rowOrderId = await row.nth(i).locator("th").textContent();
+        if(orderId.includes(rowOrderId)) {
+            await row.nth(i).locator("button").first().click();
+            break;
+        }
+    }
+const orderIdDetails = await page.locator(".col-text").textContent();
+    expect(orderId.includes(orderIdDetails)).toBeTruthy();
 });
