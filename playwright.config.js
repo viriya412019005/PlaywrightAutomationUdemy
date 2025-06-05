@@ -11,7 +11,8 @@ const config = {
   use: {
     browserName: 'chromium', // Default browser
     headless: false, // Run tests in headless mode
-    trace: 'on-first-retry',
+    screenshot: 'on',
+    trace: 'retain-on-failure', // Retain trace files on failure
   },
 };
 
