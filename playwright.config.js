@@ -1,20 +1,37 @@
 // @ts-check
 const { devices } = require("@playwright/test");
 
+/**
+ * @type {import('@playwright/test').PlaywrightTestConfig}
+ */
 const config = {
   testDir: "./tests",
-  timeout: 30 * 1000, // Default timeout for each test
+  timeout: 30 * 1000,
   expect: {
-    timeout: 5000, // Timeout for expect assertions
+    timeout: 5000,
   },
-  reporter: "html", // Use HTML reporter
+  reporter: "html",
   use: {
-    browserName: "chromium", // Default browser
-    headless: true, // Run tests in headless mode
+    headless: false,
     screenshot: "on",
-    trace: "on", // Retain trace files on failure
-    video: "on", // Record video of each test
+    trace: "on",
+    video: "on",
   },
+  projects: [
+    {
+      name: "Chrome (System)",
+      use: {
+        browserName: "chromium",
+        channel: "chrome", // Pakai Google Chrome dari device
+      },
+    },
+    // {
+    //   name: "Firefox (System)",
+    //   use: {
+    //     browserName: "firefox", // Pakai Firefox stable
+    //   },
+    // },
+  ],
 };
 
 module.exports = config;
